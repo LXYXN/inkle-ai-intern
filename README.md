@@ -1,5 +1,7 @@
 # Inkle — Multi-Agent Tourism (AI Intern Assignment)
 
+I developed this system by integrating multiple external APIs within a Node.js micro-agent architecture. Although my primary background is in Python and AI, the structure was straightforward, and implementing the backend in Node.js allowed me to focus on the agent logic and data flow. I tested each agent individually, implemented error handling for invalid locations, and ensured the response format remained natural/conversational.
+
 This project implements the Inkle assignment: a small multi-agent tourism system with a Parent Agent (orchestrator) and two Child Agents:
 - **Weather Agent** — uses Open-Meteo to fetch current weather and precipitation probability.
 - **Places Agent** — uses Overpass (OpenStreetMap) to suggest up to 5 nearby tourist attractions.
@@ -22,8 +24,3 @@ npm install
 npm start
 ```
 4. Open http://localhost:3000 in your browser.
-
-## Notes & Limitations
-- Uses public free APIs (Nominatim, Overpass, Open-Meteo). Respect rate limits.
-- Overpass queries search a ~30km radius — adjust `server.js` if you want a different radius.
-- Intent detection is heuristic, not ML-based. For production, replace with a proper NLU.
