@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Inkle - Multi-Agent Tourism (Demo)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 1rem; }
+    input, textarea, button { font-size: 1rem; padding: .5rem; width: 100%; margin: .4rem 0; }
+    .card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Inkle — Multi-Agent Tourism (Demo)</h1>
+  <p>Type something like: "I'm going to Bangalore, what is the temperature there? And what are the places I can visit?"</p>
+  <textarea id="text" rows="3" placeholder="Enter query...">I'm going to go to Bangalore, what is the temperature there? And what are the places I can visit?</textarea>
+  <input id="place" placeholder="(optional) place override — e.g. Bangalore" />
+  <button id="go">Plan my trip</button>
+
+  <div id="out"></div>
+
+<script>
+document.getElementById('go').addEventListener('click', async () => {
+  const text = document.getElementById('text').value;
+  const place = document.getElementById('place').value;
+  document.getElementById('out').innerHTML = '<div class="card">Thinking…</div>';
+  try {
+    const resp = await fetch('/api/plan', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ text, place })
+    });
+    const data = await resp.json();
+    if (data.error) {
+      document.getElementById('out').innerHTML = '<div class="card"><strong>Error:</strong> ' + data.error + '</div>';
+      return;
+    }
+    const lines = [];
+    lines.push('<div class="card"><h3>Results for: ' + (data.place || place || text) + '</h3>');
+    if (data.weather) {
+      lines.push('<p><strong>Weather:</strong> ' + (data.weather.temperature || 'N/A') +
+                 (data.weather.precipitation_probability_percent ? (' — ' + data.weather.precipitation_probability_percent + '% chance of rain') : '') + '</p>');
+    }
+    if (data.places && data.places.length) {
+      lines.push('<p><strong>Suggested places:</strong></p><ol>');
+      data.places.forEach(p => lines.push('<li>' + p + '</li>'));
+      lines.push('</ol>');
+    } else if (data.places) {
+      lines.push('<p><em>No tourist places found nearby.</em></p>');
+    }
+    lines.push('</div>');
+    document.getElementById('out').innerHTML = lines.join('\n');
+  } catch (e) {
+    document.getElementById('out').innerHTML = '<div class="card"><strong>Request failed</strong>: ' + e.message + '</div>';
+  }
+});
+</script>
+</body>
+</html>
