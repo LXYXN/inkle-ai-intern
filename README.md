@@ -13,6 +13,11 @@ This project implements the Inkle assignment: a small multi-agent tourism system
 - Returns weather summary and up to 5 suggested places.
 - Error handling for unknown/non-existent places.
 
+## Web Service Deployment
+https://inkle-ai-intern.onrender.com
+
+Deployed the project to Render (fast and free) since it was the simplest platform option for deploying a Node.js server without needing extra DevOps setup. Note: I do, however have academic knowledge on Azure deployments.
+
 ## How to run locally
 1. Ensure Node.js (>=16) is installed.
 2. Install dependencies:
