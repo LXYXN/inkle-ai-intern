@@ -23,22 +23,7 @@ npm start
 ```
 4. Open http://localhost:3000 in your browser.
 
-## API endpoints
-- `POST /api/plan`
-  - Body: `{ "text": "I'm going to Bangalore...", "place": "Bangalore" }`
-  - Response: JSON with `place`, `lat`, `lon`, `weather`, and/or `places`.
-
-## Deployment
-You can deploy this app to Render, Railway, Heroku, or Vercel (use a Node service). No API keys are required.
-
-Example (Render):
-- Create a new Web Service
-- Connect the GitHub repo and set build command `npm install` and start command `npm start`.
-
 ## Notes & Limitations
 - Uses public free APIs (Nominatim, Overpass, Open-Meteo). Respect rate limits.
 - Overpass queries search a ~30km radius — adjust `server.js` if you want a different radius.
 - Intent detection is heuristic, not ML-based. For production, replace with a proper NLU.
-
-## License
-MIT
